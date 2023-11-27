@@ -16,28 +16,37 @@ CREATE TABLE IF NOT EXISTS card (
   membership_level VARCHAR(10) NOT NULL CHECK (membership_level IN ('Silver', 'Gold'))
 );
 
--- Member
-CREATE TABLE IF NOT EXISTS member (
-  member_id VARCHAR(4) PRIMARY KEY,
-  card_id INT,
-  CHECK (member_id ~ '^M[0-9]{3}$'),
-  FOREIGN KEY (card_id) REFERENCES card(card_id),
-  FOREIGN KEY (member_id) REFERENCES person(id)
-);
-
 -- Employee
 CREATE TABLE IF NOT EXISTS employee (
   emp_id VARCHAR(4) PRIMARY KEY,
   emp_type VARCHAR(2) NOT NULL,
   start_date DATE NOT NULL,
-  certificate_number VARCHAR(255),
-  cert_issue_date DATE,
   is_trainer BOOLEAN DEFAULT false,
   trainer_emp_id VARCHAR(4) REFERENCES employee(emp_id),
   CHECK (emp_type IN ('LS', 'CM', 'RP')),
   CHECK (emp_id ~ '^E[0-9]{3}$'),
   CHECK (start_date <= CURRENT_DATE),
   FOREIGN KEY (emp_id) REFERENCES person(id)
+);
+
+-- Member
+CREATE TABLE IF NOT EXISTS member (
+  member_id VARCHAR(4) PRIMARY KEY,
+  card_id INT,
+  emp_id VARCHAR(4),
+  CHECK (member_id ~ '^M[0-9]{3}$'),
+  FOREIGN KEY (card_id) REFERENCES card(card_id),
+  FOREIGN KEY (member_id) REFERENCES person(id),
+  FOREIGN KEY (emp_id) REFERENCES employee(emp_id)
+);
+
+-- Certificate
+CREATE TABLE IF NOT EXISTS certificate (
+  certificate_number VARCHAR(255),
+  cert_issue_date DATE,
+  emp_id VARCHAR (4),
+  PRIMARY KEY (certificate_number),
+  FOREIGN KEY (emp_id) REFERENCES employee(emp_id)
 );
 
 -- Promotion

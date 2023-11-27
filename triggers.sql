@@ -86,8 +86,8 @@ EXECUTE FUNCTION check_catalog_manager_employee();
 CREATE OR REPLACE FUNCTION check_trainer_certificate()
 RETURNS TRIGGER AS $$
 BEGIN
-  IF NEW.is_trainer = true AND (NEW.certificate_number IS NULL OR NEW.cert_issue_date IS NULL) THEN
-    RAISE EXCEPTION 'Trainers must have a certificate_number and cert_issue_date.';
+  IF (SELECT is_trainer FROM employee WHERE emp_id = NEW.emp_id ) <> FALSE THEN
+    RAISE EXCEPTION 'Only trainers can have certificates assigned';
   END IF;
   RETURN NEW;
 END;
@@ -95,6 +95,6 @@ $$ LANGUAGE plpgsql;
 
 -- Create a trigger that calls the function before insert or update on the employee table
 CREATE TRIGGER check_trainer_certificate_trigger
-BEFORE INSERT OR UPDATE ON employee
+BEFORE INSERT OR UPDATE ON certificate
 FOR EACH ROW
 EXECUTE FUNCTION check_trainer_certificate();
