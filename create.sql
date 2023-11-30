@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS employee (
   emp_id VARCHAR(4) PRIMARY KEY,
   emp_type VARCHAR(2) NOT NULL,
   start_date DATE NOT NULL,
+  training_completion_date DATE,
   is_trainer BOOLEAN DEFAULT false,
   trainer_emp_id VARCHAR(4) REFERENCES employee(emp_id),
   CHECK (emp_type IN ('LS', 'CM', 'RP')),
@@ -33,11 +34,9 @@ CREATE TABLE IF NOT EXISTS employee (
 CREATE TABLE IF NOT EXISTS member (
   member_id VARCHAR(4) PRIMARY KEY,
   card_id INT,
-  emp_id VARCHAR(4),
-  CHECK (member_id ~ '^M[0-9]{3}$'),
+  CHECK (member_id ~ '^E[0-9]{3}$|^M[0-9]{3}$'),
   FOREIGN KEY (card_id) REFERENCES card(card_id),
-  FOREIGN KEY (member_id) REFERENCES person(id),
-  FOREIGN KEY (emp_id) REFERENCES employee(emp_id)
+  FOREIGN KEY (member_id) REFERENCES person(id)
 );
 
 -- Certificate
@@ -79,7 +78,7 @@ CREATE TABLE IF NOT EXISTS author (
 CREATE TABLE IF NOT EXISTS category (
   category_id VARCHAR(9) PRIMARY KEY,
   description VARCHAR(255) NOT NULL
-  CHECK (category_id IN ('Category1', 'Category2', 'Category3')),
+  CHECK (category_id IN ('Category1', 'Category2', 'Category3'))
 );
 
 -- Book

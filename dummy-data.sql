@@ -1,45 +1,72 @@
 -- Insert 10 records into the 'person' table
-INSERT INTO person (id, first_name, middle_name, last_name, gender, date_of_birth, address)
-VALUES
-('E001', 'John', 'A', 'Doe', 'Male', '1990-01-01', '123 Main St'),
-('E002', 'Jane', 'B', 'Smith', 'Female', '1985-05-15', '456 Oak St'),
-('E003', 'Alice', 'C', 'Johnson', 'Female', '1992-08-20', '789 Pine St'),
-('E004', 'Bob', 'D', 'Williams', 'Male', '1988-03-10', '101 Cedar St'),
-('E005', 'Charlie', 'E', 'Brown', 'Male', '1995-12-05', '202 Maple St'),
-('E006', 'Amanda', 'A', 'Wilson', 'Female', '1994-08-08', '56789 Maple St'),
-('M001', 'Emma', 'F', 'Miller', 'Female', '1983-06-18', '303 Birch St'),
-('M002', 'David', 'G', 'Taylor', 'Male', '1997-09-25', '404 Walnut St'),
-('M003', 'Eva', 'H', 'Clark', 'Female', '1982-02-28', '505 Oak St'),
-('M004', 'Frank', 'I', 'Moore', 'Male', '1993-11-15', '606 Elm St'),
-('M005', 'Grace', 'J', 'Anderson', 'Female', '1980-07-08', '707 Pine St');
+INSERT INTO person (id, first_name, middle_name, last_name, gender, date_of_birth, address) VALUES
+('E001', 'Jon', 'Snow', 'Doe', 'Male', '1990-07-15', 'Winterfell, Westeros'),
+('E002', 'Daenerys', 'Targaryen', 'Stormborn', 'Female', '1986-05-26', 'Dragonstone, Westeros'),
+('E003', 'Tyrion', NULL, 'Lannister', 'Male', '1980-11-11', 'Casterly Rock, Westeros'),
+('E004', 'Arya', NULL, 'Stark', 'Female', '1996-04-03', 'Winterfell, Westeros'),
+('E005', 'Cersei', NULL, 'Lannister', 'Female', '1975-09-05', 'Kings Landing, Westeros'),
+('E006', 'Sansa', NULL, 'Stark', 'Female', '1992-03-05', 'Winterfell, Westeros'),
+('E007', 'Samwell', 'Tarly', 'Tarly', 'Male', '1993-11-15', 'Horn Hill, Westeros'),
+('M001', 'Walter', 'Hartwell', 'White', 'Male', '1959-09-07', 'Albuquerque, New Mexico'),
+('M002', 'Jesse', 'Bruce', 'Pinkman', 'Male', '1984-09-24', 'Albuquerque, New Mexico'),
+('M003', 'Saul', NULL, 'Goodman', 'Male', '1962-03-12', 'Albuquerque, New Mexico'),
+('M004', 'Skyler', 'Anne', 'White', 'Female', '1970-08-11', 'Albuquerque, New Mexico'),
+('M005', 'Hank', NULL, 'Schrader', 'Male', '1967-04-04', 'Albuquerque, New Mexico'),
+('M006', 'Eleven', NULL, 'Ives', 'Female', '2006-12-01', 'Hawkins, Indiana'),
+('M007', 'Dustin', NULL, 'Henderson', 'Male', '2003-02-28', 'Hawkins, Indiana'),
+('M008', 'Will', NULL, 'Byers', 'Male', '2005-03-22', 'Hawkins, Indiana'),
+('M009', 'Maxine', 'Mayfield', 'May', 'Female', '2002-07-04', 'Hawkins, Indiana'),
+('M010', 'Mike', NULL, 'Wheeler', 'Male', '2004-01-15', 'Hawkins, Indiana');
 
--- Insert 5 records into the 'card' table
+-- Insert into Card table
 INSERT INTO card (card_id, date_of_issue, membership_level)
 VALUES
-(1, '2022-01-01', 'Silver'),
-(2, '2022-02-15', 'Gold'),
-(3, '2022-03-20', 'Silver'),
-(4, '2022-04-10', 'Gold'),
-(5, '2022-05-05', 'Silver');
+(1, '2012-01-01', 'Silver'),
+(2, '2020-02-15', 'Gold'),
+(3, '2023-03-20', 'Silver'),
+(4, '2018-04-10', 'Gold'),
+(5, '2019-05-05', 'Silver'),
+(6, '2016-06-30', 'Gold'),
+(7, '2019-07-18', 'Silver'),
+(8, '2020-08-22', 'Gold'),
+(9, '2023-09-14', 'Silver'),
+(10, '2023-11-25', 'Gold'),
+(11, '2021-11-25', 'Silver'),
+(12, '2023-02-09', 'Gold'),
+(13, '2023-02-14', 'Silver');
 
--- Insert 5 records into the 'member' table
+-- Insert into Member table
 INSERT INTO member (member_id, card_id)
 VALUES
 ('M001', 1),
 ('M002', 2),
 ('M003', 3),
 ('M004', 4),
-('M005', 5);
+('M005', 5),
+('M006', 6),
+('M007', 7),
+('M008', 8),
+('M009', 9),
+('M010', 10),
+('E001', 11),
+('E002', 12),
+('E003', 13);
 
--- Insert 10 records into the 'employee' table
-INSERT INTO employee (emp_id, emp_type, start_date, certificate_number, cert_issue_date, is_trainer, trainer_emp_id)
+-- Insert into Employee table
+INSERT INTO employee (emp_id, emp_type, start_date, is_trainer, trainer_emp_id, training_completion_date)
 VALUES
-('E001', 'LS', '2010-05-01', NULL, NULL, false, NULL),
-('E002', 'CM', '2015-08-15', 'CM_CERT002', '2015-12-15', true, NULL),
-('E003', 'RP', '2018-03-20', NULL, NULL, false, 'E002'),
-('E004', 'LS', '2013-11-10', 'LS_CERT004', '2014-06-10', true, NULL),
-('E005', 'CM', '2016-06-25', NULL, NULL, false, NULL),
-('E006', 'RP', '2019-09-12', NULL, NULL, false, 'E004');
+('E001', 'LS', '2021-01-15', true, NULL, NULL),
+('E002', 'CM', '2023-02-28', false, NULL, NULL),
+('E003', 'RP', '2022-10-22', false, 'E001', '2022-10-24'),
+('E004', 'LS', '2023-11-20', false, NULL, NULL),
+('E005', 'CM', '2022-05-05', true, NULL, NULL),
+('E006', 'RP', '2023-03-22', false, 'E005', '2023-03-28'),
+('E007', 'RP', '2023-10-25', false, 'E005', '2023-03-30');
+
+INSERT INTO certificate (certificate_number, cert_issue_date, emp_id)
+VALUES
+('Cert001', '2022-10-18', 'E001'),
+('Cert002', '2022-12-19', 'E005');
 
 -- Insert 3 records into the 'category' table
 INSERT INTO category (category_id, description)
@@ -51,44 +78,65 @@ VALUES
 -- Insert 10 records into the 'publisher' table
 INSERT INTO publisher (publisher_name)
 VALUES
-('Publisher A'),
-('Publisher B'),
-('Publisher C'),
-('Publisher D'),
-('Publisher E'),
-('Publisher F'),
-('Publisher G'),
-('Publisher H'),
-('Publisher I'),
-('Publisher J');
+('Penguin Random House'),
+('HarperCollins'),
+('Simon & Schuster'),
+('Macmillan Publishers'),
+('Hachette Livre'),
+('Wiley'),
+('Oxford University Press'),
+('Scholastic Corporation'),
+('Random House'),
+('Harvard University Press');
 
--- Insert 10 records into the 'book' table
+-- Insert into Book table
 INSERT INTO book (title, publisher_id, category_id)
 VALUES
-('Book 1', 1, 'Category1'),
-('Book 2', 2, 'Category2'),
-('Book 3', 3, 'Category3'),
-('Book 4', 3, 'Category1'),
-('Book 5', 4, 'Category2'),
-('Book 6', 5, 'Category3'),
-('Book 7', 1, 'Category1'),
-('Book 8', 5, 'Category2'),
-('Book 9', 2, 'Category3'),
-('Book 10', 4, 'Category2');
+('The Lost City', 1, 'Category1'),
+('Into the Wild', 2, 'Category2'),
+('The Hobbit', 3, 'Category3'),
+('The Da Vinci Code', 4, 'Category1'),
+('Sapiens: A Brief History of Humankind', 5, 'Category2'),
+('Harry Potter and the Philosopher''s Stone', 6, 'Category3'),
+('The Adventures of Sherlock Holmes', 7, 'Category1'),
+('Educated', 8, 'Category2'),
+('The Lord of the Rings', 9, 'Category3'),
+('Angels & Demons', 10, 'Category1'),
+('Cosmos', 1, 'Category2'),
+('The Chronicles of Narnia', 2, 'Category3'),
+('Murder on the Orient Express', 3, 'Category1'),
+('Becoming', 4, 'Category2'),
+('Alice''s Adventures in Wonderland', 5, 'Category3'),
+('The Girl with the Dragon Tattoo', 6, 'Category1'),
+('The Power of Habit', 7, 'Category2'),
+('A Game of Thrones', 8, 'Category3'),
+('The Catcher in the Rye', 9, 'Category1'),
+('To Kill a Mockingbird', 10, 'Category2');
 
--- Insert 10 records into the 'author' table
+-- Insert into the 'author' table
 INSERT INTO author (author_name)
 VALUES
-('Author X'),
-('Author Y'),
-('Author Z'),
-('Author W'),
-('Author V'),
-('Author U'),
-('Author T'),
-('Author S'),
-('Author R'),
-('Author Q');
+('Douglas Preston'),
+('Lincoln Child'),  
+('Jon Krakauer'),    
+('J.R.R. Tolkien'),  
+('Dan Brown'),       
+('Yuval Noah Harari'),
+('J.K. Rowling'),     
+('Arthur Conan Doyle'),
+('Tara Westover'),    
+('J.R.R. Tolkien'),   
+('Dan Brown'),        
+('Carl Sagan'),       
+('C.S. Lewis'),       
+('Agatha Christie'),  
+('Michelle Obama'),   
+('Lewis Carroll'),    
+('Stieg Larsson'),    
+('Charles Duhigg'),   
+('George R.R. Martin'),
+('J.D. Salinger'),    
+('Harper Lee');  
 
 -- Assign authors to books
 INSERT INTO book_author (book_id, author_id)
@@ -97,190 +145,218 @@ VALUES
 (1, 2),
 (2, 3),
 (3, 4),
-(3, 5),
-(3, 6),
-(4, 7),
-(5, 8),
-(6, 9),
-(6, 10),
-(7, 1),
-(8, 2),
+(4, 5),
+(5, 6),
+(6, 7),
+(7, 8),
 (8, 9),
-(9, 5),
-(10, 2),
-(10, 4),
-(10, 6),
-(10, 8);
+(9, 4),
+(10, 5),
+(11, 11),
+(12, 12),
+(13, 13),
+(14, 14),
+(15, 15),
+(16, 16),
+(17, 17),
+(18, 18),
+(19, 19),
+(20, 20);
 
--- Store phone number for each person
+-- Insert into Person_Phone table
 INSERT INTO person_phone (person_id, phone_number)
 VALUES
 ('E001', 1234567890),
 ('E001', 9876543210),
-('E002', 1112223333),
-('E003', 4445556666),
-('E003', 7778889999),
-('E003', 1231231234),
-('E004', 5555555555),
-('E005', 9998887777),
-('E005', 6666666666),
-('E006', 3333333333),
+('E002', 1112233444),
+('E002', 5556667777),
+('E003', 9998887777),
+('E004', 3334445555),
+('E005', 7778889999),
+('E006', 7771239999),
+('E007', 4351349999),
+('M001', 1111111111),
 ('M001', 2222222222),
-('M002', 8888888888),
+('M002', 3333333333),
 ('M002', 4444444444),
-('M003', 7777777777),
-('M004', 1239874560),
-('M005', 4567890123),
-('M005', 7890123456);
+('M003', 5555555555),
+('M004', 6666666666),
+('M005', 7777777777),
+('M006', 8888888888),
+('M007', 9999999999),
+('M008', 1231231234),
+('M009', 9876543210),
+('M010', 8765432109);
 
--- Insert 30 entries into 'payment' table.
 INSERT INTO payment (amount, payment_time, payment_method)
 VALUES
-(50.00, '2023-01-01 08:00:00', 'Cash'),
-(75.50, '2023-01-02 12:30:00', 'Debit'),
-(100.00, '2023-01-03 15:45:00', 'Credit'),
-(25.75, '2023-01-04 10:20:00', 'Cash'),
-(60.25, '2023-01-05 18:00:00', 'Debit'),
-(90.50, '2023-01-06 09:30:00', 'Credit'),
-(40.00, '2023-01-07 14:15:00', 'Cash'),
-(85.75, '2023-01-08 11:45:00', 'Debit'),
-(120.00, '2023-01-09 16:30:00', 'Credit'),
-(15.25, '2023-01-10 13:00:00', 'Cash'),
-(70.50, '2023-01-11 17:20:00', 'Debit'),
-(110.75, '2023-01-12 10:45:00', 'Credit'),
-(45.00, '2023-01-13 14:00:00', 'Cash'),
-(80.25, '2023-01-14 09:15:00', 'Debit'),
-(95.50, '2023-01-15 12:40:00', 'Credit'),
-(20.00, '2023-01-16 16:00:00', 'Cash'),
-(55.75, '2023-01-17 11:30:00', 'Debit'),
-(130.50, '2023-01-18 15:55:00', 'Credit'),
-(35.25, '2023-01-19 13:10:00', 'Cash'),
-(65.00, '2023-01-20 18:10:00', 'Debit'),
-(105.75, '2023-01-21 10:00:00', 'Credit'),
-(50.00, '2023-01-22 14:30:00', 'Cash'),
-(75.50, '2023-01-23 09:45:00', 'Debit'),
-(100.00, '2023-01-24 12:15:00', 'Credit'),
-(25.75, '2023-01-25 17:00:00', 'Cash'),
-(60.25, '2023-01-26 11:20:00', 'Debit'),
-(90.50, '2023-01-27 14:45:00', 'Credit'),
-(40.00, '2023-01-28 10:30:00', 'Cash'),
-(85.75, '2023-01-29 13:50:00', 'Debit'),
-(120.00, '2023-01-30 16:25:00', 'Credit');
+(25.00, '2023-01-10 12:30:00', 'Cash'),
+(18.50, '2023-02-05 15:45:00', 'Cash'),
+(30.20, '2023-03-12 10:20:00', 'Cash'),
+(22.75, '2023-04-20 09:15:00', 'Cash'),
+(28.90, '2023-05-25 14:00:00', 'Cash'),
+(35.60, '2023-06-30 11:45:00', 'Cash'),
+(40.25, '2023-07-15 13:20:00', 'Cash'),
+(15.80, '2023-08-22 16:10:00', 'Cash'),
+(23.45, '2023-09-18 09:30:00', 'Cash'),
+(19.75, '2023-10-27 10:55:00', 'Cash'),
+(30.50, '2023-01-15 14:15:00', 'Debit'),
+(15.25, '2023-02-20 11:30:00', 'Debit'),
+(25.75, '2023-03-25 16:45:00', 'Debit'),
+(18.90, '2023-04-30 10:30:00', 'Debit'),
+(22.40, '2023-05-10 09:20:00', 'Debit'),
+(28.75, '2023-06-05 12:40:00', 'Debit'),
+(32.60, '2023-07-18 15:55:00', 'Debit'),
+(20.30, '2023-08-23 08:25:00', 'Debit'),
+(26.90, '2023-09-28 14:15:00', 'Debit'),
+(14.50, '2023-10-10 11:05:00', 'Debit'),
+(40.00, '2023-01-28 13:40:00', 'Credit'),
+(35.20, '2023-02-12 10:00:00', 'Credit'),
+(29.75, '2023-03-20 11:20:00', 'Credit'),
+(19.90, '2023-04-15 09:35:00', 'Credit'),
+(27.45, '2023-05-03 14:50:00', 'Credit'),
+(22.80, '2023-06-18 08:45:00', 'Credit'),
+(31.60, '2023-07-02 15:30:00', 'Credit'),
+(25.30, '2023-08-05 16:10:00', 'Credit'),
+(18.75, '2023-09-10 13:00:00', 'Credit'),
+(21.40, '2023-10-15 10:45:00', 'Credit'),
+(12.40, '2023-11-15 19:45:00', 'Credit'),
+(25.99, '2023-11-10 15:30:00', 'Debit'),
+(15.50, '2023-11-12 12:45:00', 'Cash'),
+(30.75, '2023-11-15 09:15:00', 'Credit'),
+(12.99, '2023-11-18 17:00:00', 'Cash'),
+(50.25, '2023-11-20 14:20:00', 'Debit'),
+(42.50, '2023-11-25 10:00:00', 'Credit');
 
--- Insert entries into the 'promotion' table
+-- Insert into Promotion table
 INSERT INTO promotion (promotion_code, description)
 VALUES
-('PROMO001', '20% Discount on Books'),
-('PROMO002', 'Free Membership Upgrade'),
-('PROMO003', 'Buy One Get One Free'),
-('PROMO004', '50% Off on Second Purchase'),
-('PROMO005', 'Exclusive Access to Events');
+('PROMO001', '10% off on Fiction Books'),
+('PROMO002', 'Buy 2, Get 1 Free on Mystery Books'),
+('PROMO003', 'Free Membership Upgrade to Gold for a Month'),
+('PROMO004', '20% Cashback on Non-Fiction Books'),
+('PROMO005', 'Special Discount for Fantasy Book Lovers');
 
--- Insert entries into the 'card_promo' table, linking promotions to cards
 INSERT INTO card_promo (card_id, promotion_code)
 VALUES
-(1, 'PROMO001'), -- Card 1, Promotion 1
-(1, 'PROMO002'), -- Card 1, Promotion 2
-(2, 'PROMO003'), -- Card 2, Promotion 3
-(3, 'PROMO004'), -- Card 3, Promotion 4
-(3, 'PROMO005'); -- Card 3, Promotion 5
+(1, 'PROMO001'),
+(2, 'PROMO002'),
+(3, 'PROMO003'),
+(4, 'PROMO004'),
+(5, 'PROMO005'),
+(6, 'PROMO001'),
+(7, 'PROMO003'),
+(8, 'PROMO002'),
+(9, 'PROMO004'),
+(10, 'PROMO005'),
+(11, 'PROMO001'),
+(12, 'PROMO002'),
+(13, 'PROMO003');
 
--- Insert entries into 'guest' table
 INSERT INTO guest (card_id, guest_name, guest_address, guest_contact_info)
 VALUES
-(2, 'John Smith', '123 Main Street, Cityville', '555-1234'),
-(4, 'Alice Johnson', '456 Oak Avenue, Townburg', '555-5678'),
-(2, 'David Lee', '789 Pine Road, Villagetown', '555-9876'),
-(4, 'Emily Davis', '321 Elm Lane, Hamlet City', '555-4321'),
-(2, 'Michael Brown', '555 Cedar Court, Metropolis', '555-8765'),
-(4, 'Sophia White', '987 Birch Street, Suburbia', '555-3456'),
-(2, 'Christopher Clark', '654 Maple Drive, Countryside', '555-2109'),
-(4, 'Olivia Hall', '876 Willow Avenue, Uptown', '555-6789'),
-(2, 'Daniel Turner', '234 Cherry Lane, Downtown', '555-7890'),
-(4, 'Emma Taylor', '789 Sycamore Circle, Riverside', '555-1230');
+(2, 'Jim Halpert', '123 Scranton St, Scranton, PA', '555-1234'),
+(4, 'Pam Beesly', '456 Dunder Mifflin Pkwy, Scranton, PA', '555-5678'),
+(6, 'Michael Scott', '789 Dundie Dr, Scranton, PA', '555-9876'),
+(8, 'Dwight Schrute', '101 Beet Farm Ln, Schrute Farms, PA', '555-4321'),
+(10, 'Stanley Hudson', '202 Pretzel St, Scranton, PA', '555-8765'),
+(12, 'Kelly Kapoor', '303 Fashion Ave, Scranton, PA', '555-2345'),
+(2, 'Angela Martin', '404 Cat St, Scranton, PA', '555-6789'),
+(4, 'Kevin Malone', '505 Chili Ln, Scranton, PA', '555-5432'),
+(6, 'Oscar Martinez', '606 Accounting Blvd, Scranton, PA', '555-8765'),
+(8, 'Phyllis Vance', '707 Floral Dr, Scranton, PA', '555-1234'),
+(10, 'Ryan Howard', '808 Temp Ln, Scranton, PA', '555-9876'),
+(12, 'Meredith Palmer', '909 Booze St, Scranton, PA', '555-2345'),
+(10, 'Creed Bratton', '999 Unknown Ave, Scranton, PA', '555-8765'),
+(12, 'Andy Bernard', '111 Cornell Dr, Scranton, PA', '555-4321'),
+(10, 'Holly Flax', '222 Nashua St, Nashua, NH', '555-5678');
 
--- Insert entries into 'borrows' table
 INSERT INTO borrows (member_id, book_id, payment_id, issued_by_emp_id, date_of_issue, due_date_of_return)
-VALUES
-('M001', 1, 1, 'E003', '2023-01-01', '2023-01-15'),
-('M002', 2, 2, 'E006', '2023-02-01', '2023-02-15'),
-('M003', 3, 3, 'E003', '2023-03-01', '2023-03-15'),
-('M004', 4, 4, 'E006', '2023-04-01', '2023-04-15'),
-('M005', 5, 5, 'E003', '2023-05-01', '2023-05-15'),
-('M005', 6, 6, 'E006', '2023-06-01', '2023-06-15'),
-('M001', 7, 7, 'E003', '2023-07-01', '2023-07-15'),
-('M002', 8, 8, 'E006', '2023-08-01', '2023-08-15'),
-('M003', 9, 9, 'E003', '2023-09-01', '2023-09-15'),
-('M004', 10, 10, 'E006', '2023-10-01', '2023-10-15'),
-('M005', 1, 11, 'E003', '2023-02-01', '2023-02-15'),
-('M004', 2, 12, 'E006', '2023-03-01', '2023-03-15'),
-('M001', 3, 13, 'E003', '2023-04-01', '2023-04-15'),
-('M002', 4, 14, 'E006', '2023-05-01', '2023-05-15'),
-('M003', 5, 15, 'E003', '2023-06-01', '2023-06-15'),
-('M004', 6, 16, 'E006', '2023-07-01', '2023-07-15'),
-('M005', 7, 17, 'E003', '2023-08-01', '2023-08-15'),
-('M003', 8, 18, 'E006', '2023-09-01', '2023-09-15'),
-('M001', 9, 19, 'E003', '2023-10-01', '2023-10-15'),
-('M002', 10, 20, 'E006', '2023-11-01', '2023-11-15'),
-('M003', 1, 21, 'E003', '2023-03-01', '2023-03-15'),
-('M004', 2, 22, 'E006', '2023-04-01', '2023-04-15'),
-('M005', 3, 23, 'E003', '2023-05-01', '2023-05-15'),
-('M002', 4, 24, 'E006', '2023-06-01', '2023-06-15'),
-('M001', 5, 25, 'E003', '2023-07-01', '2023-07-15'),
-('M002', 6, 26, 'E006', '2023-08-01', '2023-08-15'),
-('M003', 7, 27, 'E003', '2023-09-01', '2023-09-15'),
-('M004', 8, 28, 'E006', '2023-10-01', '2023-10-15'),
-('M005', 9, 29, 'E003', '2023-11-01', '2023-11-15'),
-('M001', 10, 30, 'E006', '2023-12-01', '2023-12-15');
+VALUES ('M008', 3, 37, 'E007', '2023-11-25', '2023-12-25');
+('M001', 1, 1, 'E001', '2023-01-10', '2023-02-10'),
+('M002', 2, 2, 'E001', '2023-02-05', '2023-03-05'),
+('M003', 3, 3, 'E001', '2023-03-12', '2023-04-12'),
+('M004', 4, 4, 'E006', '2023-04-20', '2023-05-20'),
+('M005', 5, 5, 'E006', '2023-05-25', '2023-06-25'),
+('M006', 6, 6, 'E006', '2023-06-30', '2023-07-30'),
+('M007', 7, 7, 'E006', '2023-07-15', '2023-08-15'),
+('M008', 8, 8, 'E001', '2023-08-22', '2023-09-22'),
+('M009', 9, 9, 'E001', '2023-09-18', '2023-10-18'),
+('M010', 10, 10, 'E007', '2023-10-27', '2023-11-27'),
+('M010', 11, 11, 'E003', '2023-01-15', '2023-02-15'),
+('M003', 12, 12, 'E003', '2023-02-20', '2023-03-20'),
+('M008', 13, 13, 'E006', '2023-03-25', '2023-04-25'),
+('M007', 14, 14, 'E006', '2023-04-30', '2023-05-30'),
+('M006', 15, 15, 'E006', '2023-05-10', '2023-06-10'),
+('M005', 16, 16, 'E003', '2023-06-05', '2023-07-05'),
+('M004', 17, 17, 'E003', '2023-07-18', '2023-08-18'),
+('E001', 18, 18, 'E006', '2023-08-23', '2023-09-23'),
+('E001', 19, 19, 'E006', '2023-09-28', '2023-10-28'),
+('E001', 20, 20, 'E003', '2023-10-10', '2023-11-10'),
+('M004', 1, 21, 'E003', '2023-01-28', '2023-02-28'),
+('M007', 2, 22, 'E003', '2023-02-12', '2023-03-12'),
+('E003', 3, 23, 'E003', '2023-03-20', '2023-04-20'),
+('E002', 4, 24, 'E006', '2023-04-15', '2023-05-15'),
+('M005', 5, 25, 'E006', '2023-05-03', '2023-06-03'),
+('M006', 6, 26, 'E006', '2023-06-18', '2023-07-18'),
+('M007', 7, 27, 'E003', '2023-07-02', '2023-08-02'),
+('M008', 8, 28, 'E003', '2023-08-05', '2023-09-05'),
+('M001', 9, 29, 'E006', '2023-09-10', '2023-10-10'),
+('M009', 10, 30, 'E003', '2023-10-15', '2023-11-15'),
+('E002', 11, 31, 'E006', '2023-11-15', '2023-12-15'),
+('M008', 3, 32, 'E003', '2023-11-10', '2023-12-10'),
+('M008', 5, 33, 'E006', '2023-11-12', '2023-12-12'),
+('M008', 7, 34, 'E003', '2023-11-15', '2023-12-15'),
+('M008', 9, 35, 'E006', '2023-11-18', '2023-12-18'),
+('M008', 10, 36, 'E003', '2023-11-20', '2023-12-20'),
+('M008', 3, 37, 'E007', '2023-11-25', '2023-12-25');
 
--- Insert entries into 'person_comment' table
-INSERT INTO person_comments (comment_id, person_id, book_id)
-VALUES
-(1, 'M001', 1),  -- Comment by person M001 on book 1
-(2, 'M002', 2),  -- Comment by person M002 on book 2
-(3, 'M003', 3),  -- Comment by person M003 on book 3
-(4, 'M004', 4),  -- Comment by person M004 on book 4
-(5, 'M005', 5),  -- Comment by person M005 on book 5
-(6, 'M005', 6),  -- Comment by person M006 on book 6
-(7, 'M001', 7),  -- Comment by person M001 on book 7
-(8, 'M002', 8),  -- Comment by person M002 on book 8
-(9, 'M003', 9),  -- Comment by person M003 on book 9
-(10, 'M004', 10), -- Comment by person M004 on book 10
-(11, 'M005', 1),  -- Comment by person M005 on book 1
-(12, 'M004', 2),  -- Comment by person M006 on book 2
-(13, 'M001', 3),  -- Comment by person M001 on book 3
-(14, 'M002', 4),  -- Comment by person M002 on book 4
-(15, 'M003', 5);
-
--- Insert 15 records into 'comment' table
 INSERT INTO comment (content, timestamp, rating)
 VALUES
-('Great book! Highly recommended.', '2023-01-05 10:30:00', 5),
-('Interesting plot, but slow start.', '2023-02-10 14:45:00', 4),
-('Couldn''t put it down! Amazing.', '2023-03-15 18:20:00', 5),
-('Disappointed with the ending.', '2023-04-20 22:05:00', 2),
-('Well-written and thought-provoking.', '2023-05-25 08:15:00', 4),
-('A classic that everyone should read.', '2023-06-30 12:00:00', 5),
-('Enjoyed the characters and dialogue.', '2023-07-05 16:30:00', 4),
-('Too many plot twists, got confusing.', '2023-08-10 20:45:00', 3),
-('Beautifully written, but a bit slow.', '2023-09-15 09:10:00', 4),
-('Captivating from start to finish.', '2023-10-20 13:35:00', 5),
-('Interesting perspective on the topic.', '2023-11-25 17:50:00', 4),
-('The ending left me wanting more.', '2024-01-02 21:15:00', 3),
-('Thrilling plot with unexpected twists.', '2024-02-07 08:45:00', 5),
-('Character development was lacking.', '2024-03-13 12:10:00', 2),
-('Couldn''t connect with the protagonist.', '2024-04-18 16:25:00', 3);
+('Great read!', '2023-01-16 10:30:00', 4),
+('Interesting plot twists!', '2023-02-20 12:15:00', 5),
+('Couldn''t put it down!', '2023-03-25 14:45:00', 5),
+('Liked the character development.', '2023-04-30 11:30:00', 4),
+('The ending was a surprise!', '2023-05-28 09:45:00', 4),
+('Well-written and engaging.', '2023-07-05 13:00:00', 5),
+('Not my favorite genre, but enjoyed it.', '2023-07-18 15:30:00', 3),
+('Would recommend to others.', '2023-08-23 08:45:00', 5),
+('Too predictable.', '2023-09-28 14:15:00', 2),
+('The author''s best work!', '2023-10-29 11:05:00', 5),
+('Meh, didn''t leave a lasting impression.', '2023-08-28 13:40:00', 3),
+('Thought-provoking.', '2023-04-22 10:00:00', 4),
+('Must-read for fans of the genre.', '2023-03-21 11:20:00', 5),
+('Couldn''t connect with the characters.', '2023-07-15 09:35:00', 2),
+('Disappointing ending.', '2023-11-23 14:50:00', 2);
 
--- Insert 10 entries into 'catalog_manage' table
+INSERT INTO person_comments (comment_id, person_id, book_id)
+VALUES
+(1, 'M001', 1),
+(2, 'M002', 2),
+(3, 'M003', 3),
+(4, 'M004', 4),
+(5, 'M005', 5),
+(6, 'M006', 6),
+(7, 'M007', 7),
+(8, 'M008', 8),
+(9, 'M009', 9),
+(10, 'M010', 10),
+(11, 'E001', 18),
+(12, 'E002', 4),
+(13, 'E003', 3),
+(14, 'M006', 6),
+(15, 'M009', 10);
+
+-- Insert into Catalog_Manage table
 INSERT INTO catalog_manage (category_id, employee_id, date)
 VALUES
-('Category1', 'E002', '2023-01-10'),
-('Category2', 'E005', '2023-02-15'),
-('Category3', 'E002', '2023-03-20'),
-('Category1', 'E005', '2023-04-25'),
-('Category2', 'E002', '2023-05-30'),
-('Category3', 'E005', '2023-06-05'),
-('Category1', 'E002', '2023-07-10'),
-('Category2', 'E005', '2023-08-15'),
-('Category3', 'E002', '2023-09-20'),
-('Category1', 'E005', '2023-10-25');
+('Category1', 'E002', '2023-03-01'),
+('Category2', 'E005', '2023-04-01'),
+('Category3', 'E002', '2023-05-01'),
+('Category1', 'E002', '2023-06-06'),
+('Category2', 'E005', '2023-07-06'),
+('Category3', 'E005', '2023-08-06'),
+('Category1', 'E005', '2023-11-11'),
+('Category2', 'E005', '2023-11-20'),
+('Category3', 'E005', '2023-11-29'),
+('Category1', 'E002', '2023-09-06'); 

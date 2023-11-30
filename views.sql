@@ -1,50 +1,48 @@
 CREATE VIEW TopGoldMember AS
-SELECT p.first_name, p.last_name, c.date_of_issue
-FROM member m
-JOIN card c ON m.card_id = c.card_id
-JOIN borrows b ON m.member_id = b.member_id
-JOIN person p ON m.member_id = p.id
-WHERE c.membership_level = 'Gold'
-  AND date_trunc('month', b.date_of_issue) = date_trunc('month', CURRENT_DATE - INTERVAL '1 month')
-GROUP BY p.first_name, p.last_name, c.date_of_issue
-HAVING COUNT(b.book_id) > 5;
+SELECT member.member_id, person.first_name, person.last_name, COUNT(*) AS books_borrowed
+FROM member
+JOIN borrows ON member.member_id = borrows.member_id
+JOIN person ON member.member_id = person.id
+WHERE member.card_id IN (SELECT card_id FROM card WHERE membership_level = 'Gold') AND borrows.date_of_issue >= CURRENT_DATE - INTERVAL '1 month'
+GROUP BY member.member_id, person.first_name, person.last_name
+HAVING COUNT(*) > 5
+ORDER BY COUNT(*) DESC;
 
 
 CREATE VIEW PopularBooks AS
-SELECT b.book_id, b.title, COUNT(borrows.book_id) AS borrow_count
+SELECT borrows.book_id, book.title, COUNT(*) AS borrow_count
 FROM borrows
-JOIN book b ON borrows.book_id = b.book_id
+JOIN book ON book.book_id = borrows.book_id
 WHERE borrows.date_of_issue >= CURRENT_DATE - INTERVAL '1 year'
-GROUP BY b.book_id, b.title
-ORDER BY borrow_count DESC
-LIMIT 1;
+GROUP BY borrows.book_id, book.title
+HAVING COUNT(*) = (
+  SELECT COUNT(*) AS borrow_count
+  FROM borrows
+  WHERE borrows.date_of_issue >= CURRENT_DATE - INTERVAL '1 year'
+  GROUP BY book_id
+  HAVING COUNT(*) > 0
+  ORDER BY borrow_count DESC
+  LIMIT 1
+)
+ORDER BY borrow_count DESC;
 
 CREATE VIEW BestRatingPublisher AS
-SELECT p.publisher_name
-FROM publisher p
-JOIN book b ON p.publisher_id = b.publisher_id
-JOIN person_comments pc ON b.book_id = pc.book_id
-JOIN comment c ON pc.comment_id = c.comment_id
-GROUP BY p.publisher_name
-HAVING MIN(c.rating) >= 4.0;
+SELECT book.publisher_id, publisher.publisher_name, AVG(comment.rating) FROM person_comments
+INNER JOIN comment ON comment.comment_id = person_comments.comment_id
+INNER JOIN book ON person_comments.book_id = book.book_id
+INNER JOIN publisher ON publisher.publisher_id = book.publisher_id
+GROUP BY book.publisher_id, publisher.publisher_name
+HAVING AVG(comment.rating) >= 4.0;
 
 CREATE VIEW PotentialGoldMember AS
-SELECT p.first_name, p.last_name, pp.phone_number, m.member_id
-FROM person p
-JOIN member m ON p.id = m.member_id
-JOIN person_phone pp ON p.id = pp.person_id
-WHERE m.card_id IS NOT NULL
-  AND NOT EXISTS (
-    SELECT 1
-    FROM borrows b
-    WHERE m.member_id = b.member_id
-      AND date_trunc('month', b.date_of_issue) != date_trunc('month', CURRENT_DATE)
-  );
+
 
 CREATE VIEW FastTrainer AS
-SELECT e.emp_id, e.emp_type, e.start_date, e.certificate_number, e.cert_issue_date, e.is_trainer, e.trainer_emp_id
-FROM employee e
-JOIN employee trainer ON e.trainer_emp_id = trainer.emp_id
-JOIN borrows b ON e.emp_id = b.issued_by_emp_id
-WHERE e.is_trainer = true
-  AND b.date_of_issue <= e.cert_issue_date + INTERVAL '1 week';
+SELECT trainer.emp_id AS trainer_id, person.first_name || ' ' || person.middle_name ||' ' || person.last_name AS trainer_name, 
+employee.emp_id AS trained_employee_id, certificate.cert_issue_date AS trainer_certificate_issue_date, 
+employee.training_completion_date AS employee_training_completion_date 
+FROM employee AS trainer
+INNER JOIN employee ON trainer.emp_id = employee.trainer_emp_id
+INNER JOIN certificate ON certificate.emp_id = trainer.emp_id
+INNER JOIN person ON person.id = trainer.emp_id
+WHERE trainer.is_trainer IS TRUE AND employee.training_completion_date <= certificate.cert_issue_date + INTERVAL '1 week';
