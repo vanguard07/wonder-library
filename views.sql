@@ -35,21 +35,6 @@ GROUP BY book.publisher_id, publisher.publisher_name
 HAVING AVG(comment.rating) >= 4.0;
 
 CREATE VIEW PotentialGoldMember AS
-SELECT
-    m.member_id
-FROM
-    member m
-WHERE
-    m.member_id NOT IN (
-        SELECT DISTINCT b.member_id
-        FROM borrows b
-        JOIN card c ON m.card_id = c.card_id
-        WHERE
-            EXTRACT(YEAR FROM b.date_of_issue) = EXTRACT(YEAR FROM CURRENT_DATE)
-            AND c.membership_level = 'Gold'
-        GROUP BY b.member_id
-        HAVING COUNT(DISTINCT EXTRACT(MONTH FROM b.date_of_issue)) = 12
-    );
 
 
 CREATE VIEW FastTrainer AS
