@@ -34,24 +34,6 @@ INNER JOIN publisher ON publisher.publisher_id = book.publisher_id
 GROUP BY book.publisher_id, publisher.publisher_name
 HAVING AVG(comment.rating) >= 4.0;
 
-CREATE VIEW PotentialGoldMember AS
-SELECT
-    m.member_id
-FROM
-    member m
-WHERE
-    m.member_id NOT IN (
-        SELECT DISTINCT b.member_id
-        FROM borrows b
-        JOIN card c ON m.card_id = c.card_id
-        WHERE
-            EXTRACT(YEAR FROM b.date_of_issue) = EXTRACT(YEAR FROM CURRENT_DATE)
-            AND c.membership_level = 'Gold'
-        GROUP BY b.member_id
-        HAVING COUNT(DISTINCT EXTRACT(MONTH FROM b.date_of_issue)) = 12
-    );
-
-
 CREATE VIEW FastTrainer AS
 SELECT trainer.emp_id AS trainer_id, person.first_name || ' ' || person.middle_name ||' ' || person.last_name AS trainer_name, 
 employee.emp_id AS trained_employee_id, certificate.cert_issue_date AS trainer_certificate_issue_date, 
@@ -61,3 +43,11 @@ INNER JOIN employee ON trainer.emp_id = employee.trainer_emp_id
 INNER JOIN certificate ON certificate.emp_id = trainer.emp_id
 INNER JOIN person ON person.id = trainer.emp_id
 WHERE trainer.is_trainer IS TRUE AND employee.training_completion_date <= certificate.cert_issue_date + INTERVAL '1 week';
+
+CREATE VIEW PotentialGoldMember2022 AS
+SELECT * FROM borrows WHERE 
+member_id IN (SELECT member_id FROM member,card,person 
+WHERE member.card_id = card.card_id AND 
+member.member_id=person.id AND 
+card.membership_level = 'Gold') AND 
+date_of_issue < '2023-01-01';
