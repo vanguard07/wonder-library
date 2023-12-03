@@ -54,6 +54,30 @@ WHERE book_id NOT IN (
 );
 
 6. Find the members who have borrowed all the books wrote by the most popular author.
+WITH MostPopularAuthor AS (
+    SELECT
+        a.author_id
+    FROM
+        author a
+    JOIN
+        book_author ba ON a.author_id = ba.author_id
+    GROUP BY
+        a.author_id
+    ORDER BY
+        COUNT(ba.book_id) DESC
+    LIMIT 1
+)
+
+SELECT p.first_name, p.last_name from person p JOIN (SELECT
+    m.member_id
+FROM
+    member m
+JOIN
+    borrows b ON m.member_id = b.member_id
+JOIN
+    book_author ba ON b.book_id = ba.book_id
+WHERE
+    ba.author_id = (SELECT author_id FROM MostPopularAuthor)) k ON k.member_id = p.id
 
 
 7. Find the Gold Member with the greatest number of guests.
