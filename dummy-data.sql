@@ -240,7 +240,8 @@ VALUES
 (27.45, '2023-09-20 14:50:00', 'Credit'),
 (28.90, '2023-10-25 14:00:00', 'Cash'),
 (28.90, '2023-11-05 14:00:00', 'Cash'),
-(19.90, '2023-12-01 09:35:00', 'Credit');
+(19.90, '2023-12-01 09:35:00', 'Credit'),
+(9.90, '2023-03-28 19:35:00', 'Credit');
 
 -- Insert into Promotion table
 INSERT INTO promotion (promotion_code, description)
@@ -328,7 +329,8 @@ VALUES
 ('M007', 9, 48, 'E003', '2023-09-20', '2023-10-20'),
 ('M007', 10, 49, 'E003', '2023-10-25', '2023-11-25'),
 ('M007', 11, 50, 'E003', '2023-11-05', '2023-12-05'),
-('M007', 12, 51, 'E003', '2023-12-10', '2024-01-10');
+('M007', 12, 51, 'E003', '2023-12-10', '2024-01-10'),
+('M004', 4, 52, 'E003', '2023-03-28', '2023-04-28');
 
 
 -- INSERT INTO borrows (member_id, book_id, payment_id, issued_by_emp_id, date_of_issue, due_date_of_return)
@@ -377,7 +379,7 @@ VALUES
 (15, 'M009', 10);
 
 -- Insert into Catalog_Manage table
-INSERT INTO catalog_manage (category_id, employee_id, date)
+INSERT INTO catalog_manage (category_id, employee_id, catalog_date)
 VALUES
 ('Category1', 'E002', '2023-03-01'),
 ('Category2', 'E005', '2023-04-01'),
@@ -386,6 +388,17 @@ VALUES
 ('Category2', 'E005', '2023-07-06'),
 ('Category3', 'E005', '2023-08-06'),
 ('Category1', 'E005', '2023-11-11'),
-('Category2', 'E005', '2023-11-20'),
-('Category3', 'E005', '2023-11-29'),
-('Category1', 'E002', '2023-09-06'); 
+('Category2', 'E005', '2023-11-13'),
+('Category3', 'E005', '2023-11-14'),
+('Category1', 'E005', '2023-11-15'),
+('Category3', 'E005', '2023-11-20'),
+('Category2', 'E005', '2023-11-21'),
+('Category1', 'E005', '2023-11-22'),
+('Category3', 'E005', '2023-11-27'),
+('Category1', 'E005', '2023-11-28'),
+('Category2', 'E005', '2023-11-29'),
+('Category1', 'E005', '2023-12-06'),
+('Category2', 'E005', '2023-12-05'),
+('Category3', 'E005', '2023-12-04'),
+('Category1', 'E002', '2023-09-06'),
+('Category2', 'E002', '2023-03-02');

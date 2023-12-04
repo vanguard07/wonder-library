@@ -42,7 +42,7 @@ JOIN (
     LIMIT 1
   )
   ORDER BY borrow_count DESC
-) AS popular_book ON b.book_id = popular_book.book_id;
+) AS popular_book ON book.book_id = popular_book.book_id;
 
 5. Find names of books that were not borrowed in the last 5 months.
 SELECT title
@@ -55,30 +55,32 @@ WHERE book_id NOT IN (
 
 6. Find the members who have borrowed all the books wrote by the most popular author.
 WITH MostPopularAuthor AS (
-    SELECT
-        a.author_id
-    FROM
-        author a
-    JOIN
-        book_author ba ON a.author_id = ba.author_id
-    GROUP BY
-        a.author_id
-    ORDER BY
-        COUNT(ba.book_id) DESC
-    LIMIT 1
-)
-
-SELECT p.first_name, p.last_name from person p JOIN (SELECT
-    m.member_id
-FROM
-    member m
-JOIN
-    borrows b ON m.member_id = b.member_id
-JOIN
-    book_author ba ON b.book_id = ba.book_id
-WHERE
-    ba.author_id = (SELECT author_id FROM MostPopularAuthor)) k ON k.member_id = p.id
-
+  SELECT author_id FROM author 
+  WHERE author_id IN (
+    SELECT author_id FROM book_author
+    WHERE book_id IN (
+      SELECT book_id
+      FROM borrows
+      WHERE borrows.date_of_issue >= CURRENT_DATE - INTERVAL '1 year'
+      GROUP BY book_id
+      HAVING COUNT(*) = (
+        SELECT COUNT(*) AS borrow_count
+        FROM borrows
+        WHERE borrows.date_of_issue >= CURRENT_DATE - INTERVAL '1 year'
+        GROUP BY book_id
+        HAVING COUNT(*) > 0
+        ORDER BY COUNT(*) DESC
+        LIMIT 1
+      )
+      ORDER BY COUNT(*) DESC
+    )
+  )
+) SELECT DISTINCT(person.first_name || ' ' || COALESCE(person.middle_name, '') || ' ' || person.last_name) AS members
+  FROM person
+  JOIN member ON member.member_id = person.id
+  JOIN borrows ON borrows.member_id = member.member_id
+  JOIN book_author ON book_author.book_id = borrows.book_id
+  WHERE book_author.author_id IN (SELECT * FROM MostPopularAuthor);
 
 7. Find the Gold Member with the greatest number of guests.
 SELECT person.first_name, person.middle_name, person.last_name AS member_name, COUNT(guest.guest_id) AS guest_count
@@ -156,5 +158,15 @@ HAVING COUNT(*) = (
 )
 ORDER BY COUNT(*) DESC;
 
-14. List the Cataloging Managers who cataloged all categories every week in past 4 weeks. 
-
+14. List the Cataloging Managers who cataloged all categories every week in past 4 weeks.
+WITH CatalogCounts AS (
+    SELECT employee_id, COUNT(DISTINCT category_id) AS num_categories, DATE_TRUNC('week',catalog_date) AS week
+    FROM catalog_manage
+    WHERE catalog_date >= CURRENT_DATE - INTERVAL '4 weeks'
+    GROUP BY employee_id, DATE_TRUNC('week',catalog_date)
+)
+SELECT CatalogCounts.employee_id
+FROM CatalogCounts
+WHERE CatalogCounts.num_categories = (SELECT COUNT(*) FROM category)
+GROUP BY CatalogCounts.employee_id
+HAVING COUNT(DISTINCT CatalogCounts.week) = 4;

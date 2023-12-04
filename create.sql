@@ -164,8 +164,8 @@ CREATE TABLE IF NOT EXISTS book_author (
 CREATE TABLE IF NOT EXISTS catalog_manage (
   category_id VARCHAR(9),
   employee_id VARCHAR(4),
-  date DATE,
-  PRIMARY KEY (category_id, employee_id, date),
+  catalog_date DATE,
+  PRIMARY KEY (category_id, employee_id, catalog_date),
   FOREIGN KEY (category_id) REFERENCES category(category_id),
   FOREIGN KEY (employee_id) REFERENCES employee(emp_id)
 );
