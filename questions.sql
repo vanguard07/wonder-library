@@ -135,10 +135,10 @@ JOIN card ON member.card_id = card.card_id
 WHERE card.membership_level = 'Silver' AND card.date_of_issue <= CURRENT_DATE - INTERVAL '5 years';
 
 12. Find the names of the potential gold members and number of books they borrowed in the last year.
-SELECT person.id,person.first_name, COUNT(PotentialGoldMember2022.member_id) AS Books_issued_in_2022 
-FROM person,PotentialGoldMember2022 
-WHERE person.id = PotentialGoldMember2022.member_id 
-GROUP BY person.first_name,person.id;
+SELECT borrows.member_id, person.first_name || ' ' || COALESCE(person.middle_name, '') || ' ' || person.last_name AS potential_gold_members, COUNT(*) 
+FROM borrows INNER JOIN person ON person.id = borrows.member_id 
+WHERE borrows.member_id IN (SELECT member_id FROM PotentialGoldMember) 
+GROUP BY borrows.member_id, person.first_name, person.middle_name, person.last_name;
 
 13. List the employee who trained the most number of receptionists.
 SELECT trainer_emp_id, person.first_name, person.middle_name, person.last_name, COUNT(*) AS trained_employees

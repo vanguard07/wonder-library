@@ -44,10 +44,21 @@ INNER JOIN certificate ON certificate.emp_id = trainer.emp_id
 INNER JOIN person ON person.id = trainer.emp_id
 WHERE trainer.is_trainer IS TRUE AND employee.training_completion_date <= certificate.cert_issue_date + INTERVAL '1 week';
 
-CREATE VIEW PotentialGoldMember2022 AS
-SELECT * FROM borrows WHERE 
-member_id IN (SELECT member_id FROM member,card,person 
-WHERE member.card_id = card.card_id AND 
-member.member_id=person.id AND 
-card.membership_level = 'Gold') AND 
-date_of_issue < '2023-01-01';
+CREATE VIEW PotentialGoldMember AS
+WITH MonthlyIssues AS (
+    SELECT member_id, DATE_TRUNC('month', date_of_issue) AS issue_month
+    FROM borrows
+    WHERE date_of_issue >= CURRENT_DATE - INTERVAL '12 months'
+), MonthlyCounts AS (
+    SELECT member_id, COUNT(DISTINCT issue_month) AS distinct_months
+    FROM MonthlyIssues
+    GROUP BY member_id
+)
+SELECT MonthlyCounts.member_id, person.first_name || ' ' || COALESCE(person.middle_name, '') || ' ' || person.last_name AS potential_gold_members,
+person_phone.phone_number AS person_phone
+FROM MonthlyCounts
+INNER JOIN member ON member.member_id = MonthlyCounts.member_id
+INNER JOIN card ON card.card_id = member.card_id
+INNER JOIN person ON person.id = member.member_id
+LEFT JOIN person_phone ON person_phone.person_id = person.id
+WHERE MonthlyCounts.distinct_months = 12 AND card.membership_level != 'Gold';

@@ -132,7 +132,7 @@ CREATE TABLE IF NOT EXISTS person_comments (
 CREATE TABLE IF NOT EXISTS borrows (
   member_id VARCHAR(4),
   book_id INT,
-  payment_id INT,
+  payment_id INT UNIQUE,
   issued_by_emp_id VARCHAR(4),
   date_of_issue DATE,
   due_date_of_return DATE,
