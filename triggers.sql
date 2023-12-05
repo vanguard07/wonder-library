@@ -1,4 +1,20 @@
--- Create a function that checks the age of the referred person
+-- Create a trigger function to check minimum age of person is more than 12
+CREATE OR REPLACE FUNCTION check_min_age()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF EXTRACT(YEAR FROM age(current_date, NEW.date_of_birth)) <= 12 AND NEW.date_of_birth IS NOT NULL THEN
+        RAISE EXCEPTION 'Minimum person age must be 12 years or older.';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER check_person_age
+BEFORE INSERT OR UPDATE ON person
+FOR EACH ROW
+EXECUTE FUNCTION check_min_age();
+
+-- Create a trigger function to check minimum age of employee is more than 18
 CREATE OR REPLACE FUNCTION check_person_age()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -9,12 +25,12 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Create a trigger that calls the function before insert on the employee table
 CREATE TRIGGER check_employee_age
 BEFORE INSERT ON employee
 FOR EACH ROW
 EXECUTE FUNCTION check_person_age();
 
+-- Create a trigger function to check if receptionist had a trainer
 CREATE OR REPLACE FUNCTION check_trainer_constraint()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -29,6 +45,22 @@ CREATE TRIGGER check_trainer_constraint_trigger
 BEFORE INSERT OR UPDATE ON Employee
 FOR EACH ROW
 EXECUTE FUNCTION check_trainer_constraint();
+
+-- Create a trigger function to that only Cataloging Manager and Library Supervisior can be trainers
+CREATE OR REPLACE FUNCTION check_rp_trainer_constraint()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.emp_type = 'RP' AND NEW.is_trainer IS TRUE THEN
+        RAISE EXCEPTION 'Receptionists cannot be a trainer.';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER check_rp_trainer_trigger
+BEFORE INSERT OR UPDATE ON Employee
+FOR EACH ROW
+EXECUTE FUNCTION check_rp_trainer_constraint();
 
 
 -- Create a function that checks the membership level of the card
@@ -86,7 +118,7 @@ EXECUTE FUNCTION check_catalog_manager_employee();
 CREATE OR REPLACE FUNCTION check_trainer_certificate()
 RETURNS TRIGGER AS $$
 BEGIN
-  IF (SELECT is_trainer FROM employee WHERE emp_id = NEW.emp_id ) <> FALSE THEN
+  IF (SELECT is_trainer FROM employee WHERE emp_id = NEW.emp_id ) IS FALSE THEN
     RAISE EXCEPTION 'Only trainers can have certificates assigned';
   END IF;
   RETURN NEW;

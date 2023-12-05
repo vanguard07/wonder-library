@@ -24,30 +24,21 @@ FROM (
 );
 
 4. Find the name of publishers and the title of the most popular book for each publisher.
-WITH PopularBooks AS (
-  SELECT
-    p.publisher_id,
-    p.publisher_name,
-    b.title AS book_title,
-    RANK() OVER (PARTITION BY p.publisher_id ORDER BY COUNT(bo.book_id) DESC) AS rnk
-  FROM
-    publisher p
-  JOIN
-    book b ON p.publisher_id = b.publisher_id
-  JOIN
-    book_author ba ON b.book_id = ba.book_id
-  JOIN
-    borrows bo ON b.book_id = bo.book_id
-  GROUP BY
-    p.publisher_id, p.publisher_name, b.title
-)
-SELECT
-  publisher_name,
-  book_title AS most_popular_book
-FROM
-  PopularBooks
-WHERE
-  rnk = 1;
+WITH BookPublisherStats AS (
+  SELECT book.publisher_id, borrows.book_id, COUNT(*) AS borrow_count
+  FROM borrows 
+  JOIN book ON book.book_id = borrows.book_id
+  WHERE borrows.date_of_issue >= CURRENT_DATE - INTERVAL '1 year'
+  GROUP BY book.publisher_id, borrows.book_id
+) SELECT publisher.publisher_name, book.title
+  FROM BookPublisherStats
+  JOIN book ON book.book_id = BookPublisherStats.book_id
+  JOIN publisher ON publisher.publisher_id = book.publisher_id
+  WHERE (BookPublisherStats.publisher_id, BookPublisherStats.borrow_count) IN (
+    SELECT BookPublisherStats.publisher_id, MAX(BookPublisherStats.borrow_count) 
+    FROM BookPublisherStats
+    GROUP BY BookPublisherStats.publisher_id
+  );
 
 5. Find names of books that were not borrowed in the last 5 months.
 SELECT title
